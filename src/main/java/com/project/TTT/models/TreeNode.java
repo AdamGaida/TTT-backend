@@ -2,8 +2,7 @@ package com.project.TTT.models;
 
 import com.project.TTT.services.TttMethodes;
 import com.project.TTT.services.UtttMethodes;
-import lombok.Getter;
-import lombok.Setter;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class TreeNode {
     }
     public TreeNode(TttBoard tttBoard, TreeNode parent) {
         this.tttBoard = tttBoard;
-        this.isTerminal = tttMethodes.isWin(tttBoard.getBoard(),tttBoard.getPlayer1) || tttMethodes.isDraw(tttBoard.mainBoard);
+//        this.isTerminal = tttMethodes.isWin(tttBoard.getBoard(),tttBoard.getPlayer1) || tttMethodes.isDraw(tttBoard.mainBoard);
         this.isFullyExpanded = this.isTerminal;
         this.parent = parent;
         this.visits = 0;

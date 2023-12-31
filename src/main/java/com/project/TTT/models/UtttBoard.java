@@ -1,13 +1,14 @@
 package com.project.TTT.models;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Arrays;
 import java.util.Objects;
 @Getter
 @Setter
-
+@NoArgsConstructor
 public class UtttBoard {
     private String player1;
     private String player2;

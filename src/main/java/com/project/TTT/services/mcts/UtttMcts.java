@@ -1,6 +1,7 @@
-package com.project.TTT.services.uttt;
+package com.project.TTT.services.mcts;
 import com.project.TTT.models.mct.TreeNode;
-import com.project.TTT.models.uttt.UtttBoard;
+import com.project.TTT.models.boards.UtttBoard;
+import com.project.TTT.services.boards.UtttMethods;
 
 import java.util.List;
 import java.util.Random;

@@ -1,6 +1,6 @@
 package com.project.TTT.models.game;
 
-import com.project.TTT.models.uttt.UtttBoard;
+import com.project.TTT.models.boards.UtttBoard;
 import lombok.Data;
 
 @Data

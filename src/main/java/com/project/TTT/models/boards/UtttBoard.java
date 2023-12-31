@@ -1,4 +1,4 @@
-package com.project.TTT.models.uttt;
+package com.project.TTT.models.boards;
 
 import lombok.Getter;
 import lombok.Setter;

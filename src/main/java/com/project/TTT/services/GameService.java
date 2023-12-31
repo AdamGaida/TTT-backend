@@ -1,6 +1,6 @@
 package com.project.TTT.services;
 
-import com.project.TTT.models.uttt.UtttBoard;
+import com.project.TTT.models.boards.UtttBoard;
 import com.project.TTT.models.game.Game;
 import com.project.TTT.models.game.Player;
 import com.project.TTT.storage.GameStorage;

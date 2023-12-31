@@ -1,6 +1,6 @@
-package com.project.TTT.services.uttt;
+package com.project.TTT.services.boards;
 
-import com.project.TTT.models.uttt.UtttBoard;
+import com.project.TTT.models.boards.UtttBoard;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

@@ -1,7 +1,9 @@
-package com.project.TTT.models;
+package com.project.TTT.models.mct;
 
-import com.project.TTT.services.TttMethodes;
-import com.project.TTT.services.UtttMethodes;
+import com.project.TTT.models.ttt.TttBoard;
+import com.project.TTT.models.uttt.UtttBoard;
+import com.project.TTT.services.ttt.TttMethodes;
+import com.project.TTT.services.uttt.UtttMethodes;
 
 
 import java.util.HashMap;
@@ -17,7 +19,7 @@ public class TreeNode {
     TreeNode parent;
     int visits;
     double score;
-    Map<String, TreeNode> children;
+    Map<String,TreeNode> children;
 
     public TreeNode(UtttBoard utttBoard, TreeNode parent) {
         this.utttBoard = utttBoard;

@@ -1,6 +1,6 @@
-package com.project.TTT.services;
+package com.project.TTT.services.uttt;
 
-import com.project.TTT.models.UtttBoard;
+import com.project.TTT.models.uttt.UtttBoard;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class UtttMethodes {
         int[] lastMove = board.getLastMove();
 
         // Check if it's the first move
-        if (lastMove == null || (lastMove[0] == 0 && lastMove[1] == 0)) {
+        if (lastMove == null || (lastMove[0] == 0 && lastMove[1] == 0 && lastMove[2] == 0 && lastMove[3] == 0)) {
             // Allow moves in any small square of the entire board
             for (int bigRow = 0; bigRow < 3; bigRow++) {
                 for (int bigCol = 0; bigCol < 3; bigCol++) {

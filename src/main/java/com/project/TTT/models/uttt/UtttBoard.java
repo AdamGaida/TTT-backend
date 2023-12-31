@@ -1,14 +1,12 @@
-package com.project.TTT.models;
+package com.project.TTT.models.uttt;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Arrays;
-import java.util.Objects;
+
 @Getter
 @Setter
-@NoArgsConstructor
 public class UtttBoard {
     private String player1;
     private String player2;
@@ -16,13 +14,13 @@ public class UtttBoard {
     public String[][][][] subBoards;
     private String[][] mainBoard;
     private int[] lastMove;
-    public UtttBoard(String player1) {
-        this.player1 = player1;
-        this.player2 = Objects.equals(player1, "x") ? "o" : "x";
+    public UtttBoard() {
+        this.player1 = "x";
+        this.player2 =  "o";
         this.emptySquare = ".";
         this.subBoards = new String[3][3][3][3];
         this.mainBoard = new String[3][3];
-        this.lastMove = new int[2];
+        this.lastMove = new int[4];
 
         // Initialize subBoards and mainBoard with emptySquare
         for (int i = 0; i < 3; i++) {

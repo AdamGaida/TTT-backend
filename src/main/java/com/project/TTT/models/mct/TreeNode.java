@@ -4,11 +4,12 @@ import com.project.TTT.models.ttt.TttBoard;
 import com.project.TTT.models.uttt.UtttBoard;
 import com.project.TTT.services.ttt.TttMethods;
 import com.project.TTT.services.uttt.UtttMethods;
+import lombok.Data;
 
 
 import java.util.HashMap;
 import java.util.Map;
-
+@Data
 public class TreeNode {
     UtttMethods utttMethods;
     TttMethods tttMethods;

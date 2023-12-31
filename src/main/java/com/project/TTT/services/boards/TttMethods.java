@@ -2,19 +2,21 @@ package com.project.TTT.services.boards;
 
 import com.project.TTT.models.boards.TttBoard;
 import lombok.Data;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Service
 public class TttMethods {
-    TttBoard board = new TttBoard();
-    public TttBoard makeMove(int row, int col) {
+
+    public TttBoard makeMove(int row, int col, TttBoard copy) {
         // Create a new TttBoard instance that inherits from the current state
-        TttBoard board = new TttBoard(this.board);
+        TttBoard board = new TttBoard(copy);
 
         // Make the move
-        board.getPosition().put(row + "," + col, this.board.getPlayer1());
+        board.getPosition().put(row + "," + col, copy.getPlayer1());
 
         // Swap players
         char temp = board.getPlayer1();
@@ -24,7 +26,7 @@ public class TttMethods {
         // Return the new board state
         return board;
     }
-    public boolean isDraw() {
+    public boolean isDraw(TttBoard board) {
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
                 // Check if the square is empty
@@ -37,7 +39,7 @@ public class TttMethods {
         // By default, return true indicating a draw
         return true;
     }
-    public boolean isWin() {
+    public boolean isWin(TttBoard board) {
         char currentPlayer = board.getPlayer2();
 
         // Vertical sequence detection
@@ -75,15 +77,15 @@ public class TttMethods {
         // By default, return non-winning state
         return false;
     }
-    public List<TttBoard> generateStates() {
-        List<TttBoard> actions = new ArrayList<>();
+    public List<int[]> generateStates(TttBoard board) {
+        List<int[]> actions = new ArrayList<>();
 
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
                 // Check if the current square is empty
-                if (this.board.getPosition().get(row + "," + col) == this.board.getEmptySquare()) {
+                if (board.getPosition().get(row + "," + col) == board.getEmptySquare()) {
                     // Append available action/board state to actions list
-                    actions.add(this.makeMove(row, col));
+                    actions.add(new int[]{row, col});
                 }
             }
         }

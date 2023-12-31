@@ -2,16 +2,16 @@ package com.project.TTT.models.mct;
 
 import com.project.TTT.models.ttt.TttBoard;
 import com.project.TTT.models.uttt.UtttBoard;
-import com.project.TTT.services.ttt.TttMethodes;
-import com.project.TTT.services.uttt.UtttMethodes;
+import com.project.TTT.services.ttt.TttMethods;
+import com.project.TTT.services.uttt.UtttMethods;
 
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class TreeNode {
-    UtttMethodes utttMethodes;
-    TttMethodes tttMethodes;
+    UtttMethods utttMethods;
+    TttMethods tttMethods;
     TttBoard tttBoard;
     UtttBoard utttBoard;
     boolean isTerminal;
@@ -23,7 +23,7 @@ public class TreeNode {
 
     public TreeNode(UtttBoard utttBoard, TreeNode parent) {
         this.utttBoard = utttBoard;
-        this.isTerminal = utttMethodes.isWin(utttBoard.getMainBoard(),utttBoard.getPlayer1()) || utttMethodes.isDraw(utttBoard.getMainBoard(), utttBoard.getEmptySquare());
+        this.isTerminal = utttMethods.isWin(utttBoard.getMainBoard(),utttBoard.getPlayer1()) || utttMethods.isDraw(utttBoard.getMainBoard(), utttBoard.getEmptySquare());
         this.isFullyExpanded = this.isTerminal;
         this.parent = parent;
         this.visits = 0;

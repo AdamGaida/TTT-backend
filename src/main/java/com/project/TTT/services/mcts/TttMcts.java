@@ -5,6 +5,7 @@ import com.project.TTT.models.mct.TreeNode;
 import com.project.TTT.models.boards.TttBoard;
 import com.project.TTT.services.boards.TttMethods;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -51,48 +52,68 @@ public class TttMcts {
         return node;
     }
 
-    private int rollout(TttBoard board) {
-        int i = 0;
-        while (!methods.isWin(board) && !methods.isDraw(board)) {
-            try {
-                List<int[]> legalStates = methods.generateStates(board);
-                int[] state = legalStates.get(random.nextInt(legalStates.size())); // You need to implement this method
-                methods.makeMove(state[0], state[1], board);
-                i++;
-            } catch (Exception e) {
-                return 0;
-            }
-            if (methods.isWin(board)) {
-                return board.getPlayer2() == 'o' ? 1 : -1;
-            } else {
-                return 0;
-            }
-        }
-
-        // Return score from the player "x" perspective
-        if (board.getPlayer2() == 'x') {
-            return 1;
-        } else if (board.getPlayer2() == 'o') {
-            return -1;
-        }
-
-        return 0;
-    }
-/// TODO : complete the methods 
     public TreeNode expand(TreeNode node) {
-        List<int[]> legalMoves = methods.generateStates(node.getTttBoard());
-        for (int[] move : legalMoves) {
-            TttBoard newState = methods.makeMove(move[0], move[1], node.getTttBoard());
-
+        List<TttBoard> states = methods.generateStates(node.getTttBoard());
+        for (TttBoard state : states) {
+            if ( !node.getChildren().containsKey(state.getPosition().toString())){
+                TreeNode newNode = new TreeNode(state, node);
+                node.getChildren().replace(state.getPosition().toString(), newNode);
+                if (states.size() == node.getChildren().size()){
+                    node.setFullyExpanded(true);
+                }
+                return newNode;
+            }
         }
         return null;
     }
+    private int rollout(TttBoard board) {
+        while (!methods.isWin(board)){
+            try {
+                List<TttBoard> possibleStates = methods.generateStates(board);
+                board = possibleStates.get(random.nextInt(possibleStates.size()));
 
-    private TreeNode getBestMove(TreeNode root, int i) {
-        return null;
+
+            }
+            catch(Exception e){
+                return 0;
+            }
+        }
+        if (board.getPlayer2() == 'x') return 1;
+        else if(board.getPlayer2() == 'o') return -1;
+        return 0;
     }
 
     private void backPropagate(TreeNode node, int score) {
+        while (node != null){
+            node.setVisits(node.getVisits()+1);
+            node.setScore(node.getScore()+score);
+            node = node.getParent();
+        }
+    }
+
+    private TreeNode getBestMove(TreeNode root, int explorationConstant) {
+        double  bestScore = Double.NEGATIVE_INFINITY;
+        List<TreeNode> bestMoves = new ArrayList<>();
+        int currentPlayer=0;
+        for (TreeNode childNode : root.getChildren().values()){
+            if (root.getTttBoard().getPlayer2() == 'x'){
+                currentPlayer = 1;
+            }
+            else if(root.getTttBoard().getPlayer2() == 'o'){
+                currentPlayer = -1;
+            }
+            double moveScore = currentPlayer * childNode.getScore()/childNode.getVisits() + explorationConstant *
+                    Math.sqrt(Math.log((double) root.getVisits() /childNode.getVisits()));
+            if (moveScore>bestScore){
+                bestScore = moveScore;
+                bestMoves.clear();
+                bestMoves.add(childNode);
+            } else if (moveScore == bestScore) {
+                bestMoves.add(childNode);
+            }
+
+        }
+        return  bestMoves.get(random.nextInt(bestMoves.size()));
     }
 
 

@@ -77,15 +77,15 @@ public class TttMethods {
         // By default, return non-winning state
         return false;
     }
-    public List<int[]> generateStates(TttBoard board) {
-        List<int[]> actions = new ArrayList<>();
+    public List<TttBoard> generateStates(TttBoard board) {
+        List<TttBoard> actions = new ArrayList<>();
 
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
                 // Check if the current square is empty
                 if (board.getPosition().get(row + "," + col) == board.getEmptySquare()) {
                     // Append available action/board state to actions list
-                    actions.add(new int[]{row, col});
+                    actions.add(makeMove(row, col, board));
                 }
             }
         }

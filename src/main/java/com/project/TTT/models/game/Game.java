@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class Game {
     private String id;
-    private UtttBoard board;
+    private UtttBoard board = new UtttBoard();
     private GameStatus gameStatus;
     private Player player1;
     private Player player2;

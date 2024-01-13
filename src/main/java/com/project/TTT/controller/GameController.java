@@ -1,23 +1,23 @@
 package com.project.TTT.controller;
+
 import com.project.TTT.controller.dto.ConnectionRequest;
 import com.project.TTT.models.game.Game;
 import com.project.TTT.models.game.Player;
 import com.project.TTT.services.GameService;
-import com.project.TTT.storage.GameStorage;
+import com.project.TTT.services.boards.UtttMethods;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
 @AllArgsConstructor
 @RequestMapping("/game")
+@CrossOrigin("http://localhost:4200")
 public class GameController {
     private final GameService gameService;
+    private final UtttMethods methods;
     @PostMapping("/start")
     public ResponseEntity<Game> start(@RequestBody Player player){
         return ResponseEntity.ok(gameService.createGame(player));
@@ -33,5 +33,8 @@ public class GameController {
     ///TODO: player switch in game
 
     ///TODO: request for model changing
-
+    @PostMapping("/move")
+    public ResponseEntity<String> getMove(@RequestBody String positions){
+        return ResponseEntity.ok("pos: "+positions);
+    }
 }

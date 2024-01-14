@@ -4,7 +4,9 @@ import com.project.TTT.models.boards.UtttBoard;
 import com.project.TTT.models.game.Game;
 import com.project.TTT.models.game.GameStatus;
 import com.project.TTT.models.game.Player;
+import com.project.TTT.models.mct.TreeNode;
 import com.project.TTT.services.boards.UtttMethods;
+import com.project.TTT.services.mcts.UtttMcts;
 import com.project.TTT.storage.GameStorage;
 import lombok.Data;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import java.util.UUID;
 @Service
 public class GameService {
     private UtttBoard board = new UtttBoard();
+    private UtttMcts utttMcts = new UtttMcts();
     private UtttMethods methods = new UtttMethods();
     private String winner = ".";
     private Map<String, String> mp = new HashMap<>();
@@ -72,11 +75,34 @@ public class GameService {
         }
         else winner= ".";
     }
+    public void onePlayerMode(String s){
+        play++;
+        board = methods.makeMove(board, Character.getNumericValue(s.charAt(0)),
+                Character.getNumericValue(s.charAt(1)),Character.getNumericValue(s.charAt(2)),
+                Character.getNumericValue(s.charAt(3)));
+
+        if (methods.isWin(board.getMainBoard(), switchPlayer(play))){
+            winner = switchPlayer(play);
+        }
+        else if (methods.isDraw(board.getMainBoard(), switchPlayer(play))){
+            winner = "x/o";
+        }
+        else winner= ".";
+        TreeNode best_move = utttMcts.search(board);
+        board = best_move.getUtttBoard();
+        play++;
+        int[] move = board.getLastMove();
+        if (methods.isWin(board.getMainBoard(), switchPlayer(play))){
+            winner = switchPlayer(play);
+        }
+        else if (methods.isDraw(board.getMainBoard(), switchPlayer(play))){
+            winner = "x/o";
+        }
+        else winner= ".";
+    }
     public String restart(){
         board = new UtttBoard();
         return "game restarted";
     }
-    public void onePlayerMode(String s){
 
-    }
 }

@@ -1,6 +1,7 @@
 package com.project.TTT.controller;
 
 import com.project.TTT.controller.dto.ConnectionRequest;
+import com.project.TTT.controller.dto.OnePlayerResponse;
 import com.project.TTT.controller.dto.TwoPlayerResponse;
 import com.project.TTT.models.game.Game;
 import com.project.TTT.models.game.Player;
@@ -35,6 +36,13 @@ public class GameController {
         gameService.twoPlayerMode(positions);
         String s = gameService.getWinner();
         TwoPlayerResponse response = new TwoPlayerResponse(gameService.getBoard().getMainBoard(), s);
+        return ResponseEntity.ok(response);
+    }
+    @PostMapping("/1pmove")
+    public ResponseEntity<OnePlayerResponse> getOnePlayerMove(@RequestBody String positions){
+        gameService.onePlayerMode(positions);
+        String s = gameService.getWinner();
+        OnePlayerResponse response = new OnePlayerResponse(gameService.getBoard().getMainBoard(), s,gameService.getBoard().getLastMove());
         return ResponseEntity.ok(response);
     }
     @PostMapping("/restart")

@@ -15,8 +15,8 @@ public class UtttBoard {
     private String[][] mainBoard;
     private int[] lastMove;
     public UtttBoard() {
-        this.player1 = "x";
-        this.player2 =  "o";
+        this.player1 = "o";
+        this.player2 =  "x";
         this.emptySquare = ".";
         this.subBoards = new String[3][3][3][3];
         this.mainBoard = new String[3][3];

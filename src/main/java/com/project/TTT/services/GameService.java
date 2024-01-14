@@ -102,7 +102,9 @@ public class GameService {
     }
     public String restart(){
         board = new UtttBoard();
+        winner = ".";
         return "game restarted";
+
     }
 
 }

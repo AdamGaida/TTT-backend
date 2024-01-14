@@ -31,12 +31,16 @@ public class GameController {
     ///TODO: request for model changing
     @PostMapping("/2pmove")
     public ResponseEntity<String> getMove(@RequestBody String positions){
-        gameService.twoPlayerMode(positions);
-        return ResponseEntity.ok("pos: "+positions);
+//        gameService.twoPlayerMode(positions);
+        return ResponseEntity.ok("pos: "+gameService.twoPlayerMode(positions));
     }
     @PostMapping("/restart")
     public ResponseEntity<String> restart(){
         return ResponseEntity.ok(gameService.restart());
+    }
+    @PostMapping("/winboard")
+    public ResponseEntity<String[][]> winStatus(){
+        return ResponseEntity.ok(gameService.getBoard().getMainBoard());
     }
 
 }

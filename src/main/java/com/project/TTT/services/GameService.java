@@ -18,7 +18,7 @@ import java.util.UUID;
 @Service
 public class GameService {
     private UtttBoard board = new UtttBoard();
-    private UtttMethods methods;
+    private UtttMethods methods = new UtttMethods();
     private Map<String, String> mp = new HashMap<>();
     private int play = 0;
     public Game createGame(Player player){
@@ -65,19 +65,22 @@ public class GameService {
     }
 
     ///TODO : front, back connection
-    public void twoPlayerMode(String s){
+    public String twoPlayerMode(String s){
         play++;
         board = methods.makeMove(board, Character.getNumericValue(s.charAt(0)),
                 Character.getNumericValue(s.charAt(1)),Character.getNumericValue(s.charAt(2)),
                 Character.getNumericValue(s.charAt(3)));
         ///TODO : addouma ras thouma kifee nchoufou l win fl subboard ??
         if (methods.isWin(board.getMainBoard(), switchPlayer(play))){
-
+            return switchPlayer(play);
         }
+        if (methods.isDraw(board.getMainBoard(), switchPlayer(play))){
+            return "draw";
+        }
+        return "nothing";
     }
     public String restart(){
         board = new UtttBoard();
-        initializeMap();
         return "game restarted";
     }
     public void onePlayerMode(String s){

@@ -84,7 +84,7 @@ public class GameService {
         if (methods.isWin(board.getMainBoard(), switchPlayer(play))){
             winner = switchPlayer(play);
         }
-        else if (methods.isDraw(board.getMainBoard(), switchPlayer(play))){
+        else if (methods.isDraw(board.getMainBoard(), ".")){
             winner = "x/o";
         }
         else {
@@ -96,7 +96,7 @@ public class GameService {
         if (methods.isWin(board.getMainBoard(), switchPlayer(play))){
             winner = switchPlayer(play);
         }
-        else if (methods.isDraw(board.getMainBoard(), switchPlayer(play))){
+        else if (methods.isDraw(board.getMainBoard(), ".")){
             winner = "x/o";
         }
        }

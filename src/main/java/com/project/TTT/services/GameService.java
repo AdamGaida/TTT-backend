@@ -87,18 +87,19 @@ public class GameService {
         else if (methods.isDraw(board.getMainBoard(), switchPlayer(play))){
             winner = "x/o";
         }
-        else winner= ".";
+        else {
+
+        winner= ".";
         TreeNode best_move = utttMcts.search(board);
         board = best_move.getUtttBoard();
         play++;
-        int[] move = board.getLastMove();
         if (methods.isWin(board.getMainBoard(), switchPlayer(play))){
             winner = switchPlayer(play);
         }
         else if (methods.isDraw(board.getMainBoard(), switchPlayer(play))){
             winner = "x/o";
         }
-        else winner= ".";
+       }
     }
     public String restart(){
         board = new UtttBoard();

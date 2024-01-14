@@ -4,17 +4,23 @@ import com.project.TTT.models.boards.UtttBoard;
 import com.project.TTT.models.game.Game;
 import com.project.TTT.models.game.GameStatus;
 import com.project.TTT.models.game.Player;
+import com.project.TTT.services.boards.UtttMethods;
 import com.project.TTT.storage.GameStorage;
-import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.UUID;
 
-@AllArgsConstructor
+@Data
 @Service
 public class GameService {
+    private UtttBoard board = new UtttBoard();
+    private UtttMethods methods;
+    private Map<String, String> mp = new HashMap<>();
+    private int play = 0;
     public Game createGame(Player player){
         Game game = new Game();
         game.setBoard(new UtttBoard());
@@ -46,9 +52,35 @@ public class GameService {
         GameStorage.getInstance().setGame(game);
         return game;
     }
-
+    public void initializeMap(){
+        for (int i=0; i<=2; i++){
+            for (int j =0; j<=2; j++){
+                String key = Integer.toString(i) + Integer.toString(j);
+                mp.put(key, "");
+            }
+        }
+    }
+    public String switchPlayer(int count){
+         return (count%2==0)?"x":"o";
+    }
 
     ///TODO : front, back connection
+    public void twoPlayerMode(String s){
+        play++;
+        board = methods.makeMove(board, Character.getNumericValue(s.charAt(0)),
+                Character.getNumericValue(s.charAt(1)),Character.getNumericValue(s.charAt(2)),
+                Character.getNumericValue(s.charAt(3)));
+        ///TODO : addouma ras thouma kifee nchoufou l win fl subboard ??
+        if (methods.isWin(board.getMainBoard(), switchPlayer(play))){
 
+        }
+    }
+    public String restart(){
+        board = new UtttBoard();
+        initializeMap();
+        return "game restarted";
+    }
+    public void onePlayerMode(String s){
 
+    }
 }

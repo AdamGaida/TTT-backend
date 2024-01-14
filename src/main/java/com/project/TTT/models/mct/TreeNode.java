@@ -24,7 +24,7 @@ public class TreeNode {
 
     public TreeNode(UtttBoard utttBoard, TreeNode parent) {
         this.utttBoard = utttBoard;
-        this.isTerminal = UtttMethods.isWin(utttBoard.getMainBoard(),utttBoard.getPlayer1()) || UtttMethods.isDraw(utttBoard.getMainBoard(), utttBoard.getEmptySquare());
+        this.isTerminal = utttMethods.isWin(utttBoard.getMainBoard(),utttBoard.getPlayer1()) || utttMethods.isDraw(utttBoard.getMainBoard(), utttBoard.getEmptySquare());
         this.isFullyExpanded = this.isTerminal;
         this.parent = parent;
         this.visits = 0;

@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 @Service
 public class UtttMethods {
-
-    public static List<int[]> generateStates(UtttBoard board) {
+    public  List<int[]> generateStates(UtttBoard board) {
         List<int[]> actions = new ArrayList<>();
         int[] lastMove = board.getLastMove();
 
@@ -17,43 +16,35 @@ public class UtttMethods {
             // Allow moves in any small square of the entire board
             for (int bigRow = 0; bigRow < 3; bigRow++) {
                 for (int bigCol = 0; bigCol < 3; bigCol++) {
-                    for (int smallRow = 0; smallRow < 3; smallRow++) {
-                        for (int smallCol = 0; smallCol < 3; smallCol++) {
-                            if (board.getSubBoards()[bigRow][bigCol][smallRow][smallCol].equals(board.getEmptySquare())) {
-                                actions.add(new int[]{bigRow, bigCol, smallRow, smallCol});
-                            }
-                        }
-                    }
+                    states(board, actions, bigRow, bigCol);
                 }
             }
         } else {
             int bigRow = lastMove[2];
             int bigCol = lastMove[3];
             if (board.getMainBoard()[bigRow][bigCol].equals(board.getEmptySquare())) {
-                for (int smallRow = 0; smallRow < 3; smallRow++) {
-                    for (int smallCol = 0; smallCol < 3; smallCol++) {
-                        if (board.getSubBoards()[bigRow][bigCol][smallRow][smallCol].equals(board.getEmptySquare())) {
-                            actions.add(new int[]{bigRow, bigCol, smallRow, smallCol});
-                        }
-                    }
-                }
+                states(board, actions, bigRow, bigCol);
             } else {
                 for (int bigRowIter = 0; bigRowIter < 3; bigRowIter++) {
                     for (int bigColIter = 0; bigColIter < 3; bigColIter++) {
                         if (board.getMainBoard()[bigRowIter][bigColIter].equals(board.getEmptySquare())) {
-                            for (int smallRow = 0; smallRow < 3; smallRow++) {
-                                for (int smallCol = 0; smallCol < 3; smallCol++) {
-                                    if (board.getSubBoards()[bigRowIter][bigColIter][smallRow][smallCol].equals(board.getEmptySquare())) {
-                                        actions.add(new int[]{bigRowIter, bigColIter, smallRow, smallCol});
-                                    }
-                                }
-                            }
+                            states(board, actions, bigRowIter, bigColIter);
                         }
                     }
                 }
             }
         }
         return actions;
+    }
+
+    public static void states(UtttBoard board, List<int[]> actions, int bigRow, int bigCol) {
+        for (int smallRow = 0; smallRow < 3; smallRow++) {
+            for (int smallCol = 0; smallCol < 3; smallCol++) {
+                if (board.getSubBoards()[bigRow][bigCol][smallRow][smallCol].equals(board.getEmptySquare())) {
+                    actions.add(new int[]{bigRow, bigCol, smallRow, smallCol});
+                }
+            }
+        }
     }
 
     public UtttBoard makeMove(UtttBoard board,int bigRow, int bigCol, int smallRow, int smallCol) {
@@ -80,17 +71,17 @@ public class UtttMethods {
 
         return newBoard;
     }
-    public static boolean isDraw(String[][] board,String emptySquare) {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                if (board[i][j].equals(emptySquare)) {
+    public  boolean isDraw(String[][] board,String emptySquare) {
+        for (String[] strings : board) {
+            for (String string : strings) {
+                if (string.equals(emptySquare)) {
                     return false;
                 }
             }
         }
         return true;
     }
-    public static boolean isWin(String[][] board, String playerSymbol) {
+    public  boolean isWin(String[][] board, String playerSymbol) {
         // Check each column for a win
         for (int col = 0; col < 3; col++) {
             if (board[0][col].equals(playerSymbol) && board[1][col].equals(playerSymbol) && board[2][col].equals(playerSymbol)) {

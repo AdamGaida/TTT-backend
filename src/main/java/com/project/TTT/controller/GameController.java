@@ -1,6 +1,7 @@
 package com.project.TTT.controller;
 
 import com.project.TTT.controller.dto.ConnectionRequest;
+import com.project.TTT.controller.dto.TwoPlayerResponse;
 import com.project.TTT.models.game.Game;
 import com.project.TTT.models.game.Player;
 import com.project.TTT.services.GameService;
@@ -30,9 +31,11 @@ public class GameController {
 
     ///TODO: request for model changing
     @PostMapping("/2pmove")
-    public ResponseEntity<String> getMove(@RequestBody String positions){
-//        gameService.twoPlayerMode(positions);
-        return ResponseEntity.ok("pos: "+gameService.twoPlayerMode(positions));
+    public ResponseEntity<TwoPlayerResponse> getMove(@RequestBody String positions){
+        gameService.twoPlayerMode(positions);
+        String s = gameService.getWinner();
+        TwoPlayerResponse response = new TwoPlayerResponse(gameService.getBoard().getMainBoard(), s);
+        return ResponseEntity.ok(response);
     }
     @PostMapping("/restart")
     public ResponseEntity<String> restart(){

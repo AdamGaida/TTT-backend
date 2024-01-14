@@ -19,6 +19,7 @@ import java.util.UUID;
 public class GameService {
     private UtttBoard board = new UtttBoard();
     private UtttMethods methods = new UtttMethods();
+    private String winner = ".";
     private Map<String, String> mp = new HashMap<>();
     private int play = 0;
     public Game createGame(Player player){
@@ -52,32 +53,24 @@ public class GameService {
         GameStorage.getInstance().setGame(game);
         return game;
     }
-    public void initializeMap(){
-        for (int i=0; i<=2; i++){
-            for (int j =0; j<=2; j++){
-                String key = Integer.toString(i) + Integer.toString(j);
-                mp.put(key, "");
-            }
-        }
-    }
     public String switchPlayer(int count){
          return (count%2==0)?"x":"o";
     }
 
     ///TODO : front, back connection
-    public String twoPlayerMode(String s){
+    public void twoPlayerMode(String s){
         play++;
         board = methods.makeMove(board, Character.getNumericValue(s.charAt(0)),
                 Character.getNumericValue(s.charAt(1)),Character.getNumericValue(s.charAt(2)),
                 Character.getNumericValue(s.charAt(3)));
         ///TODO : addouma ras thouma kifee nchoufou l win fl subboard ??
         if (methods.isWin(board.getMainBoard(), switchPlayer(play))){
-            return switchPlayer(play);
+            winner= switchPlayer(play);
         }
-        if (methods.isDraw(board.getMainBoard(), switchPlayer(play))){
-            return "draw";
+        else if (methods.isDraw(board.getMainBoard(), ".")){
+            winner= "x/o";
         }
-        return "nothing";
+        else winner= ".";
     }
     public String restart(){
         board = new UtttBoard();

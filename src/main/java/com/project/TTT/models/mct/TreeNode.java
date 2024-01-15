@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 @Data
 public class TreeNode {
-    UtttMethods utttMethods;
+    UtttMethods utttMethods=new UtttMethods();
     TttMethods tttMethods;
     TttBoard tttBoard;
     UtttBoard utttBoard;

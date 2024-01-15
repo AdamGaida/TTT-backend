@@ -4,16 +4,16 @@ import com.project.TTT.models.boards.UtttBoard;
 import com.project.TTT.services.boards.UtttMethods;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 public class UtttMcts {
-    private UtttMethods utttMethods;
-    private TreeNode root;
-    private Random random = new Random();
+    private final UtttMethods utttMethods = new UtttMethods();
+    private final Random random = new Random();
 
     public TreeNode search(UtttBoard initialState) {
-        root = new TreeNode(initialState, null);
+        TreeNode root = new TreeNode(initialState, null);
         for (int i = 0; i < 1000; i++) {
             TreeNode node = select(root);
             int score = rollout(node.getUtttBoard());
@@ -37,7 +37,7 @@ public class UtttMcts {
         List<int[]> legalMoves = utttMethods.generateStates(node.getUtttBoard());
         for (int[] move : legalMoves) {
             UtttBoard newState = utttMethods.makeMove(node.getUtttBoard(),move[0], move[1], move[2], move[3]);
-            String key = newState.getSubBoards().toString(); // assuming this method returns the string representation
+            String key = Arrays.deepToString(newState.getSubBoards()); // assuming this method returns the string representation
             if (!node.getChildren().containsKey(key)) {
                 TreeNode newNode = new TreeNode(newState, node);
                 node.getChildren().put(key, newNode);
@@ -52,7 +52,7 @@ public class UtttMcts {
 
     private int rollout(UtttBoard board) {
         int i = 0;
-        while (!utttMethods.isWin(board.getMainBoard(),board.getPlayer2()) && !utttMethods.isDraw(board.getMainBoard(),board.getEmptySquare()) && i <= 100) {
+        while (utttMethods.isWin(board.getMainBoard(),board.getPlayer2()) && utttMethods.isDraw(board.getMainBoard(),board.getEmptySquare()) && i <= 100) {
             try {
                 List<int[]> legalStates = utttMethods.generateStates(board);
                 int[] state = legalStates.get(random.nextInt(legalStates.size())); // You need to implement this method

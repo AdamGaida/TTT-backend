@@ -49,9 +49,5 @@ public class GameController {
     public ResponseEntity<String> restart(){
         return ResponseEntity.ok(gameService.restart());
     }
-    @PostMapping("/winboard")
-    public ResponseEntity<String[][]> winStatus(){
-        return ResponseEntity.ok(gameService.getBoard().getMainBoard());
-    }
 
 }

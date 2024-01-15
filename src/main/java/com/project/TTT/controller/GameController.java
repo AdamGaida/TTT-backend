@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/game")
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin
 public class GameController {
     private final GameService gameService;
     @PostMapping("/start")

@@ -14,7 +14,7 @@ public class UtttMcts {
 
     public TreeNode search(UtttBoard initialState) {
         TreeNode root = new TreeNode(initialState, null);
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 9000; i++) {
             TreeNode node = select(root);
             int score = rollout(node.getUtttBoard());
             backpropagate(node, score);
@@ -52,7 +52,7 @@ public class UtttMcts {
 
     private int rollout(UtttBoard board) {
         int i = 0;
-        while (utttMethods.isWin(board.getMainBoard(),board.getPlayer2()) && utttMethods.isDraw(board.getMainBoard(),board.getEmptySquare()) && i <= 100) {
+        while (utttMethods.isWin(board.getMainBoard(),board.getPlayer2()) && utttMethods.isDraw(board.getMainBoard(),board.getEmptySquare())) {
             try {
                 List<int[]> legalStates = utttMethods.generateStates(board);
                 int[] state = legalStates.get(random.nextInt(legalStates.size())); // You need to implement this method
